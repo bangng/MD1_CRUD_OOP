@@ -45,6 +45,8 @@
         <th>Song</th>
         <th>Lyrics</th>
         <th>Category</th>
+        <th>EDIT</th>
+
 
 
     </tr>
@@ -194,6 +196,7 @@
 <td>${listSong[i].name}</td>
 <td>${listSong[i].lyrics}</td>
 <td>${listSong[i].category}</td>
+<td ><button style="border-radius: 25%; color: peru; background: blue"  onclick="eDitt(${listSong[i].id})">EDIT</button></td>
 </tr>`
 
         }
@@ -216,7 +219,7 @@
             return
         }
 
-        let song = new Song('A', nameSong, lyrics, selectCategory)
+        let song = new Song(1, nameSong, lyrics, selectCategory)
 
         listSong.push(song)
 
@@ -224,6 +227,18 @@
         showListSong();
 
 
+    }
+    function eDitt(id) {
+        for (let i = 0; i < listSong.length; i++) {
+            if (listSong[i].id === id) {
+                let eDitnameSong = prompt('eDitnameSong', listSong[i].name)
+                let eDitLyrics = prompt('eDitLyrics',listSong[i].lyrics)
+
+                listSong[i].setName(eDitnameSong)
+                listSong[i].setLyrics(eDitLyrics)
+            }
+        }
+        showListSong();
     }
 
 
