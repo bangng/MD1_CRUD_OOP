@@ -23,17 +23,35 @@
     </tbody>
 </table>
 <br>
-<p id="category">Name Song:</p><br>
+<p>Name Song:</p><br>
+<p></p>
 
 
 <input type="text" id="nameSong"><br>
 <p>Lyrics:</p>
 
 
-<textarea id="lyrics" cols="20" rows="20"></textarea><select id="selectCategory" onchange="changeCategory()">
-<!--    <option></option>-->
+<textarea id="lyrics" style="width: 100px;height: 50px"></textarea><select id="selectCategory"
+                                                                           onchange="changeCategory()">
+    <!--    <option></option>-->
 </select>
-<button id="createSong">Create Song</button>
+<button onclick="createSong()">Create Song</button>
+<br>
+
+<table border="1">
+
+    <tr>
+        <th>STT</th>
+        <th>Song</th>
+        <th>Lyrics</th>
+        <th>Category</th>
+
+
+    </tr>
+    <tbody id="drawTable2">
+
+    </tbody>
+</table>
 
 
 </body>
@@ -82,7 +100,7 @@
         // let style_bt= '';
         for (let i = 0; i < listCategory.length; i++) {
             drawTable += `<tr class="${class_tr}">
-<td>${listCategory[i].id = i+1}</td>
+<td>${listCategory[i].id = i + 1}</td>
 <td>${listCategory[i].name}</td>
 <td ><button style="border-radius: 25%; color: peru; background: blue"  onclick="upDateCategory(${listCategory[i].id})">EDIT</button></td>
 <td><button style="border-radius: 25%; color: cyan ;background: darkred"   onclick="deleteCategory(${listCategory[i].id})">DELETE</button></td>
@@ -92,20 +110,21 @@
         document.getElementById('drawTable').innerHTML = drawTable;
 
         let selectCategory = ""
-        for (let i = 0; i<listCategory.length;i++){
+        for (let i = 0; i < listCategory.length; i++) {
             let value = listCategory[i].name
-            selectCategory +=`<option value="${value}">${listCategory[i].name}</option>`
+            selectCategory += `<option value="${value}">${listCategory[i].name}</option>`
+
 
         }
         document.getElementById('selectCategory').innerHTML = selectCategory
-
 
 
     }
 
     showListCategory();
     let valueSelect;
-    function changeCategory(){
+
+    function changeCategory() {
         valueSelect = document.getElementById('selectCategory').value;
 
     }
@@ -155,6 +174,58 @@
         }
         showListCategory();
     }
+
+    let listSong = []
+    //
+    // let song1 = new Song('A','song','Nhạc Rock','')
+    // let song2 = new Song('B','song','Nhạc Vàng','')
+    // let song3 = new Song('C','song','Nhạc Đỏ','')
+    // let song4 = new Song('D','song','Nhạc Trẻ','')
+    // listSong.push(song1,song2,song3,song4);
+
+    function showListSong() {
+
+        let drawTable2 = '';
+        let class_tr = '';
+        // let style_bt= '';
+        for (let i = 0; i < listSong.length; i++) {
+            drawTable2 += `<tr class="${class_tr}">
+<td>${listSong[i].id = i + 1}</td>
+<td>${listSong[i].name}</td>
+<td>${listSong[i].lyrics}</td>
+<td>${listSong[i].category}</td>
+</tr>`
+
+        }
+        document.getElementById('drawTable2').innerHTML = drawTable2;
+    }
+
+    showListSong();
+
+    function createSong() {
+        // let check = true;
+
+        let selectCategory = document.getElementById('selectCategory').value;
+        let nameSong = document.getElementById('nameSong').value;
+
+        let lyrics = document.getElementById('lyrics').value;
+
+        if (nameSong.trim() === '' || lyrics.trim() === '') {
+
+            document.getElementById('validate').innerHTML = '<span style="color: red">không được để trống</span>'
+            return
+        }
+
+        let song = new Song('A', nameSong, lyrics, selectCategory)
+
+        listSong.push(song)
+
+
+        showListSong();
+
+
+    }
+
 
 </script>
 

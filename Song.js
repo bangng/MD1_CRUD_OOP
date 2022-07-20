@@ -1,11 +1,11 @@
 class Song  {
-    // id;
+    id;
     name;
     lyrics;
     category;
     constructor(id,name,lyrics,category) {
         this.name = name;
-        // this.id = id;
+        this.id = id;
         this.lyrics = lyrics;
         this.category = category;
 
