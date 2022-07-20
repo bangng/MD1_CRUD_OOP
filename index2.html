@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p id="validate"></p>
+<input id="newCategory" type="text">
+<button onclick="createCategory()">Create</button>
+
+<table border="1">
+
+    <tr>
+        <th>STT</th>
+        <th>Thể Loại</th>
+        <th id="Edit">Sửa</th>
+        <th id="Delete">Xóa</th>
+
+    </tr>
+    <tbody id="drawTable">
+
+    </tbody>
+</table>
+<br>
+<p id="category">Name Song:</p><br>
+
+
+<input type="text" id="nameSong"><br>
+<p>Lyrics:</p>
+
+
+<textarea id="lyrics" cols="20" rows="20"></textarea><select id="selectCategory" onchange="changeCategory()">
+<!--    <option></option>-->
+</select>
+<button id="createSong">Create Song</button>
+
+
+</body>
+</html>
+<script>
+    class Category {
+        id;
+        name;
+
+        constructor(id, name) {
+            this.id = id;
+            this.name = name;
+
+        }
+
+        getId() {
+            return this.id;
+        }
+
+        setId(value) {
+            this.id = value;
+        }
+
+        getName() {
+            return this.name;
+        }
+
+        setName(value) {
+            this.name = value;
+        }
+
+
+    }
+
+    let listCategory = []
+    let category1 = new Category(1, 'Nhạc Vàng')
+    let category2 = new Category(2, 'Nhạc Đỏ')
+    let category3 = new Category(3, 'Nhạc Trẻ')
+    let category4 = new Category(4, 'Nhạc Rock')
+    listCategory.push(category1, category2, category3, category4);
+
+    function showListCategory() {
+
+        let drawTable = '';
+        let class_tr = '';
+        // let style_bt= '';
+        for (let i = 0; i < listCategory.length; i++) {
+            drawTable += `<tr class="${class_tr}">
+<td>${listCategory[i].id = i+1}</td>
+<td>${listCategory[i].name}</td>
+<td ><button style="border-radius: 25%; color: peru; background: blue"  onclick="upDateCategory(${listCategory[i].id})">EDIT</button></td>
+<td><button style="border-radius: 25%; color: cyan ;background: darkred"   onclick="deleteCategory(${listCategory[i].id})">DELETE</button></td>
+</tr>`
+
+        }
+        document.getElementById('drawTable').innerHTML = drawTable;
+
+        let selectCategory = ""
+        for (let i = 0; i<listCategory.length;i++){
+            let value = listCategory[i].name
+            selectCategory +=`<option value="${value}">${listCategory[i].name}</option>`
+
+        }
+        document.getElementById('selectCategory').innerHTML = selectCategory
+
+
+
+    }
+
+    showListCategory();
+    let valueSelect;
+    function changeCategory(){
+        valueSelect = document.getElementById('selectCategory').value;
+
+    }
+
+    function createCategory() {
+        let newCategory = document.getElementById('newCategory').value;
+        let check = true;
+        if (newCategory.trim() === '') {
+            document.getElementById('validate').innerHTML = '<span style="color: red">không được để trống</span>'
+        } else {
+            for (let i = 0; i < listCategory.length; i++) {
+                if (newCategory.toLowerCase() === listCategory[i].name.toLowerCase()) {
+                    check = false;
+                }
+
+            }
+            if (!check) {
+                document.getElementById('validate').innerHTML = '<span style="color: green">Đã có trong danh sách</span>'
+            }
+        }
+        if (check) {
+            listCategory.push(new Category(listCategory[listCategory.length - 1].id + 1, newCategory))
+            document.getElementById('validate').innerHTML = '<span style="color: green">Hoàn Thành</span>'
+
+        }
+
+
+        showListCategory();
+    }
+
+    function upDateCategory(id) {
+        for (let i = 0; i < listCategory.length; i++) {
+            if (listCategory[i].id === id) {
+                let eDitCategory = prompt('eDitCategory', listCategory[i].name)
+                listCategory[i].setName(eDitCategory)
+            }
+        }
+        showListCategory();
+    }
+
+    function deleteCategory(id) {
+        for (let i = 0; i < listCategory.length; i++) {
+            if (listCategory[i].id === id) {
+                listCategory.splice(i, 1)
+                break;
+            }
+        }
+        showListCategory();
+    }
+
+</script>
+
+<script src="Song.js">
+
+</script>
